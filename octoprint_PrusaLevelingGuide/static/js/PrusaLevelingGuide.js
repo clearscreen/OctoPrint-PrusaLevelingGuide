@@ -141,6 +141,23 @@ $(function() {
 		self.selectedView = ko.observable();
 		self.bedTemperature = ko.observable('');
 		self.nozzleTemperature = ko.observable('');
+
+		// Settings helper: mesh presets selector (autofill scripts)
+		self.meshPresets = ko.observableArray([
+			{ key: "", label: "-- Choose preset --" },
+			{ key: "mk3", label: "Prusa MK3/MK3S(+) (Einsy)", script: "G28 W ; home all without mesh bed level\nM400\nG80; mesh bed leveling\nG81 ; check mesh leveling results" },
+			{ key: "mk35", label: "Prusa MK3.5/MK4 (xBuddy)", script: "G28 ; home all\nM400\nG29 ; mesh bed leveling\nG29 T ; report mesh" }
+		]);
+		self.selectedMeshPreset = ko.observable("");
+		self.applyMeshPreset = function () {
+			var key = self.selectedMeshPreset();
+			if (!key) return;
+			var preset = self.meshPresets().find(function(p){ return p.key === key; });
+			if (preset && preset.script) {
+				// Overwrite the configured mesh gcode with the preset's script
+				self.settingsViewModel.settings.plugins.PrusaLevelingGuide.mesh_gcode(preset.script);
+			}
+		};
 		
 		
 		// Data from MT

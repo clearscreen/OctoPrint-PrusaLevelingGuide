@@ -5,6 +5,16 @@
     Specify what command to use for mesh bed leveling
     </p>
     <div class="control-group">
+        <label class="control-label">Presets</label>
+        <div class="controls">
+            <div class="input-append">
+                <select style="width:auto" data-bind="options: meshPresets, optionsText: 'label', optionsValue: 'key', value: selectedMeshPreset"></select>
+                <button class="btn" type="button" data-bind="click: applyMeshPreset, enable: selectedMeshPreset">Apply</button>
+            </div>
+            <p class="help-block">Use "MK3.5/xBuddy" for MK3.5/MK4 firmware (uses G29/G29 T).</p>
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label">Mesh Leveling Script</label>
         <div class="controls">
             <textarea rows="4" class="block" data-bind="value: settingsViewModel.settings.plugins.PrusaLevelingGuide.mesh_gcode"></textarea>

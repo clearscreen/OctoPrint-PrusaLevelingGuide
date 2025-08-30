@@ -1,6 +1,6 @@
 # OctoPrint-PrusaLevelingGuide
 
-This plugin is for guiding the user through fine adjustments of the bed.  Some of these mods are linked in the Guides section below.  This plugin is only intended for the Prusa MK3 and its variants (MK3, MK3S, MK3S+).  It does not support the partial upgrade MK3.5.
+This plugin guides you through fine adjustments of the bed. Some of these mods are linked in the Guides section below. It supports Prusa MK3 family (MK3/MK3S/MK3S+) and MK3.5/MK4 (xBuddy) firmware for reading mesh reports.
 
 ## Setup
 
@@ -19,7 +19,7 @@ or manually using this URL:
 
 ## Known Issues
 * Installation may silently fail due to missing system dependencies. **You should upgrade to OctoPi 0.18+** or SSH into your pi and run the command `sudo apt install libatlas3-base`.
-* This plugin will calculate the relative values for you and will not work with firmware modifications that change the G81 response.
+* This plugin calculates relative values from the printer's mesh report. It will not work with firmware that significantly alters the format of the G81 or G29 T reports.
 * Z Calibration can effect bed leveling. If you re-calibrate your Z-axis after leveling your bed, it might look like the whole left or right side of the bed is suddenly higer/lower than the other side. The reason for this is, that the Z-axis leadscrews might have changed their angular position relative to each other due to soft mechanical upper stops. If this is the case, try to rotate one of the leadscrews by hand by one or two clicks instead of re-adjusting the bed again.
 
 ## Preheating profiles
@@ -72,6 +72,8 @@ You have the option of viewing the values in a table view or overlayed on a phot
 
 The configuration tab allows you to customize the gcode for mesh leveling similar to the PrusaMeshMap plugin.
 
+Preset helper: A visible "Presets" selector is available above the script box. Choose "Prusa MK3.5/MK4 (xBuddy)" to autofill the correct sequence using `G29`/`G29 T`. Choose "Prusa MK3/MK3S(+) (Einsy)" to autofill the classic `G80`/`G81` sequence. Click Apply, then Save settings.
+
 ![Configuration](settings.png)
 
 ## Inspirations
@@ -82,9 +84,9 @@ The configuration tab allows you to customize the gcode for mesh leveling simila
 - [g81_relative](https://github.com/pcboy/g81_relative) This is the site I originally used for converting my g81 values to relative numbers.  This is what inspired me to add all the different calculation types.
 
 
-## G81 Output Handler
+## Mesh Output Handler
 
-Just like the PrusaMeshMap plugin, this plugin has a handler that is watching output received from the printer **at all times**. This means you can place a G81 in octoprint's or your slicer's start or stop gcode and the plugin will update its values after every print.
+Just like the PrusaMeshMap plugin, this plugin has a handler that is watching output received from the printer **at all times**. You can place a `G81` (MK3) or `G29 T` (MK3.5/MK4) in OctoPrint's or your slicer's start/stop gcode and the plugin will update its values after every print.
 
 ## Z Calibration can effect bed leveling
 
