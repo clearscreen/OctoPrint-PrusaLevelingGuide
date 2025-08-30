@@ -86,7 +86,7 @@ Click Apply, then Save settings. You can also customize the parking move in "Mov
 ## MK3.5 (xBuddy) Quick Start
 
 1. Go to Settings → Prusa Leveling Guide → Presets and choose the xBuddy preset, then Apply and Save.
-2. What it runs: `G28` (home), `M400` (sync), `G29` (probe mesh), `G29 T` (print mesh report).
+2. What it runs: `G28` (home), `M400` (wait), `G29` (probe mesh), `G29 T` (print mesh report).
 3. Optional but recommended: enable preheat and select a temperature profile for more accurate fine tuning.
 4. Open the plugin tab and click "Begin Adjusting". The plugin will probe, park (using your Move gcode), and display per-screw directions.
 5. Adjust, click Continue to re-probe, and repeat until the variance meets your target. Click Finished to stop (preheat is turned off if enabled).
