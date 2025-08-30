@@ -43,9 +43,9 @@ class PrusaLevelingGuidePlugin(octoprint.plugin.SimpleApiPlugin,
 
 	def get_settings_defaults(self):
 		return dict(
-			# Default remains for MK3/MK3S+ (Einsy). For MK3.5/MK4 (xBuddy), use:
+			# Default remains for MK3/MK3S+ (Einsy). For MK3.5 (xBuddy), use:
 			# G28 ; home all\nM400\nG29 ; mesh bed leveling\nG29 T ; report mesh
-			mesh_gcode = 'G28 W ; home all without mesh bed level\nM400\nG80; mesh bed leveling\nG81 ; check mesh leveling results',
+			mesh_gcode = 'G28 W ; home all without mesh bed level\nM400\nG80 ; mesh bed leveling\nG81 ; check mesh leveling results',
 			move_gcode = 'G1 Z60 Y210 F6000',
 			enable_preheat = True,
 			enable_preheat_nozzle = True,
@@ -64,7 +64,7 @@ class PrusaLevelingGuidePlugin(octoprint.plugin.SimpleApiPlugin,
 			js=["js/PrusaLevelingGuide.js"],
 			css=["css/PrusaLevelingGuide.css"],
 			less=["less/PrusaLevelingGuide.less"],
-			photo_heatbed=["img/photo_headbed.png"]
+			photo_heatbed=["img/photo_heatbed.png"]
 		)
 
 	##~~ Softwareupdate hook
@@ -128,7 +128,7 @@ class PrusaLevelingGuidePlugin(octoprint.plugin.SimpleApiPlugin,
 	def check_for_mesh_response(self, comm_instance, phase, cmd, cmd_type, gcode, subcode=None, tags=None, *args, **kwargs):
 		"""Start waiting for a mesh report when the reporting command is sent.
 		- MK3/MK3S+: 'G81' reports the mesh
-		- MK3.5/MK4 (xBuddy): 'G29 T' reports the mesh; bare 'G29' only measures
+		- MK3.5 (xBuddy): 'G29 T' reports the mesh; bare 'G29' only measures
 		"""
 		try:
 			start_wait = False
